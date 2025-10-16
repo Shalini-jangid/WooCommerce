@@ -13,7 +13,7 @@ connectDB();
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173",        
-  "https://your-frontend-domain.vercel.app",  
+  "https://woo-commerce-a2gi.vercel.app/",  
 ]
 
 app.use(
