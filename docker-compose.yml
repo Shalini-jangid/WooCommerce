@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  # --- MongoDB Database ---
+  mongo:
+    image: mongo:7.0
+    container_name: woocommerce-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # --- Backend API Service ---
+  backend:
+    build: ./Backend
+    container_name: woocommerce-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongo:27017/woocommerce_products
+      - WC_BASE_URL=https://wp-multisite.convertcart.com/wp-json/wc/v3/products
+      - WC_CONSUMER_KEY=ck_af82ae325fbee1c13f31eb26148f4dea473b0f77
+      - WC_CONSUMER_SECRET=cs_2d8cc467c5b91a80f5ed18dd3c282ee8299c9445
+    depends_on:
+      - mongo
+
+  # --- Frontend UI Service ---
+  frontend:
+    build: ./Frontend
+    container_name: woocommerce-frontend
+    restart: always
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
