@@ -20,7 +20,7 @@ const WooCommerce = () => {
   const [segmentResultData, setSegmentResultData] = useState(null);
 
   // Your backend base URL
-  const API_BASE = "https://woocommerce-jcxx.onrender.com/"; 
+  const API_BASE = "https://woocommerce-jcxx.onrender.com"; 
 
   // Fetch products from backend
   useEffect(() => {
